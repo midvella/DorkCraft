@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DorkCraft: kapsam kontrollü arama sorgusu oluşturucu, şablon kütüphanesi ve yerel sorgu koleksiyonu.">
+  <title>DorkCraft — Search Intelligence Workspace</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="core.js" defer></script>
+  <script src="catalog.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <h1 class="logo">DORK<span>CRAFT</span></h1>
+    <p class="subtitle">Advanced Search Intelligence Tool</p>
+    <div class="scanline"></div>
+  </header>
+  <nav class="tabs" aria-label="Çalışma alanları">
+    <button class="tab active" data-tab="builder" aria-current="page">BUILDER</button>
+    <button class="tab" data-tab="custom">CUSTOM</button>
+    <button class="tab" data-tab="templates">ŞABLONLAR</button>
+    <button class="tab" data-tab="library">KAYITLAR</button>
+    <button class="tab" data-tab="reference">REFERANS</button>
+  </nav>
+  <main class="main">
+    <section class="panel workspace">
+      <div class="panel-title">Çalışma Kapsamı <span class="badge">YEREL</span></div>
+      <div class="kw-grid">
+        <div><label class="field-label" for="scope">Alan adları (isteğe bağlı)</label><input class="input" id="scope" placeholder="example.com, docs.example.com" spellcheck="false"><p class="hint">Kapsam, oluşturulan ve şablondan açılan sorgulara uygulanır.</p></div>
+        <div><label class="field-label" for="engine">Arama motoru</label><select class="input" id="engine"><option value="google">Google</option><option value="bing">Bing</option><option value="duckduckgo">DuckDuckGo</option></select><p class="hint">Operatör desteği motora göre değişir. Sorgular otomatik çalıştırılmaz.</p></div>
+      </div>
+    </section>
+    <section id="tab-builder" class="tab-content active" aria-label="Sorgu oluşturucu">
+      <div class="panel"><div class="panel-title">Operatörler</div><div id="opRows"></div><button class="add-btn" id="addRowBtn">+ OPERATÖR EKLE</button></div>
+      <div class="panel"><div class="panel-title">Anahtar Kelimeler ve Tarih</div><div class="kw-grid">
+        <div><label class="field-label" for="keywords">Anahtar kelimeler</label><input id="keywords" class="input" placeholder="genel arama terimleri"></div>
+        <div><label class="field-label" for="exact">Tam eşleşme</label><input id="exact" class="input" placeholder="exact phrase"></div>
+        <div><label class="field-label" for="exclude">Hariç tut (virgülle ayır)</label><input id="exclude" class="input" placeholder="spam, eski sürüm"></div>
+        <div><label class="field-label" for="orterms">VEYA terimleri (virgülle ayır)</label><input id="orterms" class="input" placeholder="rapor, araştırma"></div>
+        <div><label class="field-label" for="after">Bu tarihten sonra</label><input id="after" class="input" type="date"></div>
+        <div><label class="field-label" for="before">Bu tarihten önce</label><input id="before" class="input" type="date"></div>
+      </div></div>
+    </section>
+    <section id="tab-custom" class="tab-content" aria-label="Manuel sorgu">
+      <div class="panel"><div class="panel-title">Manuel Dork</div><label class="field-label" for="customInput">Sorgu ifadesi</label><textarea id="customInput" class="input" spellcheck="false" placeholder='site:example.com filetype:pdf intitle:"annual report"'></textarea><p class="hint">Ctrl / Cmd + Enter: ara. Ctrl / Cmd + Shift + S: kaydet.</p></div>
+    </section>
+    <section id="tab-templates" class="tab-content" aria-label="Şablonlar">
+      <div class="search-bar kw-grid"><div><label class="field-label" for="templateSearch">Şablon ara</label><input id="templateSearch" class="input" placeholder="Ad, kategori veya sorgu..."></div><div><label class="field-label" for="categoryFilter">Kategori</label><select id="categoryFilter" class="input"><option value="">Tüm kategoriler</option></select></div></div>
+      <p id="templateCount" class="hint"></p><div class="templates-grid" id="templatesGrid"></div>
+    </section>
+    <section id="tab-library" class="tab-content" aria-label="Kayıtlar ve geçmiş">
+      <div class="panel"><div class="panel-title">Sorgu Koleksiyonu</div><label class="field-label" for="librarySearch">Kayıtlarda ara</label><input id="librarySearch" class="input" placeholder="Ad veya sorgu..."><div class="action-bar"><button class="btn-secondary" id="exportBtn">JSON DIŞA AKTAR</button><button class="btn-ghost" id="importBtn">JSON İÇE AKTAR</button><input id="importFile" type="file" accept=".json,application/json" hidden></div><div id="savedList" class="record-list"></div></div>
+      <div class="panel"><div class="panel-title">Arama Geçmişi <span class="badge">SON 50</span></div><label class="hint"><input id="rememberHistory" type="checkbox" checked> Aramaları bu tarayıcıda hatırla</label><div id="historyList" class="record-list"></div><button class="btn-ghost" id="clearHistoryBtn">GEÇMİŞİ TEMİZLE</button></div>
+    </section>
+    <section id="tab-reference" class="tab-content" aria-label="Operatör referansı"><div class="panel"><div class="panel-title">Operatör Referansı</div><p class="hint">Sorgu denetimi sözdizimi için yardımcıdır; indeks ve sonuç doğruluğunu garanti etmez. <a href="https://support.google.com/websearch/answer/2466433?hl=tr" target="_blank" rel="noopener noreferrer">Google arama rehberi</a></p><div class="ref-grid" id="refGrid"></div></div></section>
+    <section class="panel" id="outputPanel" aria-label="Sorgu çıktısı">
+      <div class="panel-title">Oluşturulan Dork <span class="badge" id="queryStats">0 KARAKTER</span></div>
+      <div class="output-box" id="outputBox" aria-live="polite"></div>
+      <ul id="diagnostics" class="diagnostics" aria-live="polite"></ul>
+      <div class="action-bar"><button class="btn-primary" id="searchBtn">GOOGLE'DA ARA</button><button class="btn-secondary" id="copyBtn">KOPYALA</button><button class="btn-ghost" id="copyLinkBtn">ARAMA LİNKİ</button><button class="btn-ghost" id="editBtn">CUSTOM'A AKTAR</button><button class="btn-ghost" id="clearBtn">TEMİZLE</button></div>
+      <div class="save-bar"><label class="sr-only" for="saveName">Kayıt adı</label><input id="saveName" class="input" maxlength="120" placeholder="Kayıt adı (isteğe bağlı)"><button id="saveBtn" class="btn-secondary">KAYDET</button></div>
+    </section>
+    <footer class="hint footer">DorkCraft / Sorgular ve kayıtlar bu tarayıcıda tutulur. Arama düğmesi seçilen motoru yeni sekmede açar.</footer>
+  </main>
+</div>
+<div id="status" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
