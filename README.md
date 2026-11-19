@@ -2,7 +2,7 @@
 
 Kapsamlı arama sorguları oluşturmak, şablonları düzenlemek ve sorgu koleksiyonlarını yönetmek için tarayıcı tabanlı bir çalışma alanı. Saf HTML, CSS ve JavaScript kullanır; derleme, sunucu uygulaması veya API anahtarı gerektirmez. Orijinal koyu tema, yeşil/turuncu palet ve panel düzeni korunmuştur.
 
-|**⚠️ Sorumluluk Reddi:** Bu araç sadece yasal araştırmalar ve eğitim amacıyla sunulmaktadır. Yapılan sorgulardan ve elde edilen sonuçların kullanımından doğabilecek tüm sorumluluk kullanıcıya ait olup, geliştiriciler hiçbir koşulda sorumlu tutulamaz.
+| **⚠️ Sorumluluk Reddi:** Bu araç sadece yasal araştırmalar ve eğitim amacıyla sunulmaktadır. Yapılan sorgulardan ve elde edilen sonuçların kullanımından doğabilecek tüm sorumluluk kullanıcıya ait olup, geliştiriciler hiçbir koşulda sorumlu tutulamaz.
 
 
 ## Çalıştırma
